@@ -1,3 +1,28 @@
+<?php include("database.php") ?>
+
+<?php
+$number  = (int) $_GET['n'];
+
+
+//Fetch question . . . .
+$query = "SELECT * FROM questions where question_number = '$number' ";
+
+$result = mysqli_query($conn,$query);
+
+$question = mysqli_fetch_array($result);
+
+// Fetch choices
+
+$query2 = "select * from choices where question_number = '$number'";
+$results = mysqli_query($conn, $query2);
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,14 +30,12 @@
 </head>
 <body>
 Question 1 of 5
-<p>What does PHP stand for?</p>
+<p><?php echo $question['text']; ?></p>
 
 <form method="post" action="process.php">
 <ul>
-<li> <input type="radio" id="1" name="1" value ="1" />PHP: Hypertext Preprocessor </li>
-<li> <input type="radio" id="1" name="1" value ="2" />Personal Home Page </li>
-<li> <input type="radio" id="1" name="1" value ="3" />Private Home Page </li>
-<li> <input type="radio" id="1" name="1" value ="4" />Personal Hypertext Preprocessor </li>
+<?php while($row = mysqli_fetch_array($results)) { ?>
+<li> <input type="radio" id="1" name="1" value = <?php echo $row['id']; ?> /><?php echo $row['text']; } ?> </li>
 
 </ul>
 

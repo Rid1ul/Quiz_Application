@@ -1,3 +1,5 @@
+<?php session_start();?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,7 @@
 
 <h2>You're done</h2>
 <p>Congratulations ! You have completrd the test !</p>
-<p>Your score: </p>
+<p>Your score: <?php echo $_SESSION['score']?> </p>
 
 <a href="question.php?n=1">Take again </a> 
 

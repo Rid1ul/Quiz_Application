@@ -1,66 +1,51 @@
-<?php include("database.php"); ?>
-<?php session_start();?>
+<?php include "database.php"; ?>
+
+<?php session_start(); ?>
 
 <?php
+
 if(!isset($_SESSION['score']))
-{
 	$_SESSION['score']=0;
 
-}
-	
-    /* Fetching question number and selected choice */
-	
-if ($_POST)
-{
-	$number = $_POST['number']; 
-	$selected_choice = $_POST['choice'];
-	
-	$next = $number+1;	
-}	
-	
-	/* Finding the total number of questions */
-	
-	$query2 = "select * from questions";
-$result2 = mysqli_query($conn,$query2);
-$total = mysqli_num_rows($result2);
+$number = $_POST['number'];
+$selected_choice = $_POST['choice']; 
+$next = $number+1;
 
+// echo "Question number: ".$number."<br>"." choice: ".$selected_choice."<br>";
 
-/* Fetcing the correct choice  */
+$query = "SELECT * FROM choices WHERE question_number='$number' and is_correct=1 ";
 
-$query = "SELECT * FROM choices WHERE question_number='$number' and is_correct = 1" ;
 
 $result = mysqli_query($conn,$query);
+$row = mysqli_fetch_assoc($result);
+$correct_choice = $row['id'];
 
-$row = mysqli_fetch_array($result);
+/*
+echo "Correct choice: ".$correct_choice."<br>";
+echo  "Score: ".$_SESSION['score'];
+*/
+$query2 = "SELECT * FROM questions";
+$results = mysqli_query($conn,$query2);
+$total = mysqli_num_rows($results);
 
-$correct_choice = $row['id']; 
 
 
-/* Matching the selected choice with correct choice and adding to the score */
-
-if($correct_choice ==  $selected_choice)
-{
+if($correct_choice == $selected_choice)
 	$_SESSION['score']++;
-}	
+
+echo  "Score: ".$_SESSION['score'];
 
 
-/* Checking if this is the last question and redirect  */
 
-if($number == $total) 
+if($number==$total)
 {
-	header("Location: final.php");
-} else
-{
-	header("Location: question.php?n=".$next);	
+header("Location: final.php");
+    exit();
 }
+else
+	header("Location: question.php?n=".$next);
+
 	
-	
-	
-
-
-
-
-
 
 
 ?>

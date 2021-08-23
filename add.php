@@ -1,3 +1,11 @@
+<?php session_start(); 
+if(!isset($_SESSION['email']))
+{
+	header("Location: login.php");
+}
+
+
+?>
 <?php include "database.php"; ?>
 
 <?php
@@ -66,12 +74,12 @@ echo "<br>Number of question: ".$total." Next : ".$next;
 <html>
 
     <head>
-        <h2>Add A Question </h2>
+        <h2>Add A Question And Its Choices</h2>
     </head>
 	<?php
 	if(isset($msg))
 	{
-		echo "<p>".$msg."</p>";
+		echo '<p style="color:green">'.$msg.'</p>';
 	}
 	
 	?>
@@ -86,32 +94,32 @@ echo "<br>Number of question: ".$total." Next : ".$next;
 			 
 			 <p>
 			 <label> Question text: </label> 
-			 <input type="text" name="question_text" />
+			 <input type="text" name="question_text" size="80" />
 			 </p>
 			 
 			 <p>
 			 <label> Choice #1: </label> 
-			 <input type="text" name="choice1" />
+			 <input type="text" name="choice1" size="50" />
 			 </p>
 			 
 			 <p>
 			 <label> choice #2: </label> 
-			 <input type="text" name="choice2" />
+			 <input type="text" name="choice2" size="50" />
 			 </p>
 			 
 			 <p>
 			 <label> Choice #3: </label> 
-			 <input type="text" name="choice3" />
+			 <input type="text" name="choice3" size="50" />
 			 </p>
 			 
 			 <p>
 			 <label> Choice #4: </label> 
-			 <input type="text" name="choice4" />
+			 <input type="text" name="choice4" size="50" />
 			 </p>
 			
 			<p>
 			 <label>Choice #5: </label> 
-			 <input type="text" name="choice5" />
+			 <input type="text" name="choice5" size="50" />
 			</p>
 			
 			<p>
@@ -124,7 +132,8 @@ echo "<br>Number of question: ".$total." Next : ".$next;
 		 </form>
 	
 	    
-		
+		<br><br>
+		<a href="logout.php">Logout</a>
 		
 	
 	</body>
